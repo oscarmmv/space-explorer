@@ -1,0 +1,38 @@
+[gd_scene load_steps=4 format=3 uid="uid://dh7elcep04tt2"]
+
+[ext_resource type="Script" path="res://Player.cs" id="1_1sbp3"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_myfdv"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_oioec"]
+height = 0.149034
+radius = 0.102676
+
+[node name="Player" type="RigidBody3D" node_paths=PackedStringArray("_camera", "_cameraPivot", "_groundCast")]
+angular_damp = 10.0
+script = ExtResource("1_1sbp3")
+_camera = NodePath("CameraPivot/Camera3D")
+_cameraPivot = NodePath("CameraPivot")
+_groundCast = NodePath("GroundCast")
+_thrust = 10.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+visible = false
+mesh = SubResource("CapsuleMesh_myfdv")
+
+[node name="CameraPivot" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.678147, 0)
+
+[node name="Camera3D" type="Camera3D" parent="CameraPivot"]
+transform = Transform3D(1, 0, 0, 0, 0.989234, -0.146342, 0, 0.146342, 0.989234, 0, -1.35907, 0)
+current = true
+
+[node name="SpotLight3D" type="SpotLight3D" parent="CameraPivot/Camera3D"]
+spot_range = 60.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.874453, 0)
+shape = SubResource("CylinderShape3D_oioec")
+
+[node name="GroundCast" type="RayCast3D" parent="."]
+target_position = Vector3(0, -1.4, 0)
